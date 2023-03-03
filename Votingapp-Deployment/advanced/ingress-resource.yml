@@ -1,12 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: example-ingress
+  name: example-ingress-vote
   annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
+  tls:
+  - hosts:
+    - vote.anaeleboo.com
+    secretName: example-tls-34
   rules:
-    - host: votingapp.com
+    - host: vote.anaeleboo.com
       http:
         paths:
           - path: /vote
